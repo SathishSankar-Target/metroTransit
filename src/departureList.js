@@ -13,7 +13,6 @@ class DepartureList extends Component {
   
   // onClick method to expand/colapse to show more/less departure list when the list length is more than 3
   showMoreDeparture = () => {
-		console.log(this.state)
     if(this.state.departureCountToShow === 3 ){
       this.setState({ departureCountToShow: this.props.departureList.Departures.length, departureExpanded: true })
     } else {
