@@ -1,6 +1,6 @@
 # Metro Transit App
 
-Metro Transit app uses live data from [Metro Transit](https://www.metrotransit.org/nextrip/) file to show route, direction, stop and respective departure details
+Metro Transit app uses live data from [Metro Transit](https://www.metrotransit.org/nextrip/) to show route, direction, stop and respective departure details
 
 ## Prerequisites
 
