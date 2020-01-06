@@ -1,0 +1,197 @@
+.App {
+  text-align: center;
+  margin: 30px;
+}
+.page-title {
+  font-weight: 700;
+  line-height: 1.2;
+  font-size: 32px;
+  margin: 0 0 48px;
+  color: #626462;
+}
+.select-box-container {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.select-box {
+  display: inline-block;
+  width: 100%;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 1.4375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #626462;
+  vertical-align: middle;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  background-color: #fff;
+  border: 1px solid #e3e3e0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 10px 0;
+}
+
+.depature-container {
+  background-color: #f5f5f4;
+  padding:20px;
+  color: #626462;
+  text-align: left;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.depature-title {
+  font-size: 34px;
+  margin-bottom: 15px;
+  line-height: 1.2;
+  color: #626462;
+  text-align: left;
+  padding: 0;
+  margin: 0 0 10px;
+}
+.stop-description {
+  border-bottom: 1px solid #8a8b8a;
+  padding-bottom: 20px;
+}
+.depature-list{
+  padding: 12px 0 12px;
+  border-bottom: 1px solid #8a8b8a;
+  display: flex;
+  justify-content: space-between;
+}
+
+.route-id {
+  margin-right: 10px;
+}
+
+.show-more-button {
+  color: #626462;
+  line-height: 1.5;
+  font-weight: 700;
+  font-size: 16px;
+  border:none;
+  background: none;
+  margin-top: 20px;
+  padding: 0;
+}
+.expand, .colapsed {
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  background: url('./images/circle-plus-blue.svg') no-repeat center;
+  background-size: contain;
+  margin-right: 10px;
+  display: inline-block;
+}
+.expand {
+  background: url('./images/circle-minus-blue.svg') no-repeat center;
+  background-size: contain;
+}
+.button-main {
+  background-color: #dbf4fd;
+  color: #0097d0;
+  font-weight: 500;
+  font-size: 22px;
+  padding: 12px 32px;
+  border:none
+}
+
+.logo {
+  background: url('./images/MetroTransitLogo.svg') no-repeat center;
+  height: 30px;
+  width: 200px;
+  background-size: contain;
+  margin: 20px;
+}
+.banner {
+  background: url('./images/nextrip.jpg') no-repeat center;
+  background-size: cover;
+  background-position: 90%;
+  background-repeat: no-repeat;
+  height: 10rem;
+  position: relative;
+}
+
+.banner h1 {
+  position: absolute;
+  background-color: #fff;
+  color: #8a8b8a;
+  opacity: 0.9;
+  margin-bottom: 0;
+  padding: 1rem;
+  width: auto;
+  font-size: 2rem !important;
+  left: 20px;
+  bottom: 20px;
+}
+
+.footer {
+  background: #f5f5f4;
+  font-size: 14px;
+  text-align: center;
+  color: #626462;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 40px;
+}
+.footer p {
+  margin: 0 0 5px;
+}
+
+@media screen and (min-width: 992px) {
+  .banner {
+    height: 275px; } 
+    }
+@media screen and (min-width: 1200px) {
+  .banner {
+    height: 320px; } 
+    }
+
+@media screen and (max-width: 768px) {
+  .App {
+    margin:15px;
+  }
+  .banner {
+    height: 240px;  
+  }
+  .page-title{
+    font-size: 23px;
+    margin-bottom: 20px;
+  }
+  .select-box-container {
+    width: 100%;
+  }
+  .select-box {
+    font-size: 18px;
+  }
+  .depature-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  .depature-title {
+    font-size: 23px;
+  }
+}
+
+@media (min-width: 992px) {
+  .blink {
+    width: 1rem;
+    height: 1rem;
+    background: url('./images/broadcast-blue.svg') no-repeat;
+    background-size: contain;
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+.blink {
+  -webkit-animation: fadeIn 1s infinite alternate;
+  animation: fadeIn 1s infinite alternate;
+  width: 0.75rem;
+  height: 0.75rem; 
+}

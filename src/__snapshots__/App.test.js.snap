@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="App"
+  >
+    <h2
+      class="page-title"
+    >
+      Real-time Departures
+    </h2>
+    <div
+      class="select-box-container"
+    >
+      <select
+        class="select-box"
+      >
+        <option>
+          Select route
+        </option>
+      </select>
+    </div>
+  </div>
+</DocumentFragment>
+`;
