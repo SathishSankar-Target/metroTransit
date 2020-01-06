@@ -1,12 +1,12 @@
 import React , { Component }from 'react';
 import './App.css';
 import {fetchApi} from './apiCalls'
-import DepatureList from './depatureList'
+import DepartureList from './departureList'
 
 class App extends Component {
   constructor(props) {
     super(props)
-    this.updateDepatureData = this.updateDepatureData.bind(this)
+    this.updateDepartureData = this.updateDepartureData.bind(this)
     this.state = {
       routes : [],
       selectedRoute: '',
@@ -25,10 +25,10 @@ class App extends Component {
 
   componentDidMount() {
     fetchApi('routes').then(routes => this.setState({routes :routes }))
-    setInterval(this.updateDepatureData, 60000)
+    setInterval(this.updateDepartureData, 60000)
   }
   // Makes the call every 1 min only when there is selectedRoute, selectedDirection, selectedStop
-  async updateDepatureData() {
+  async updateDepartureData() {
     if(this.state.selectedRoute !== '' && this.state.selectedDirection !== '' && this.state.selectedStop !== '') {
       const query = this.state.selectedRoute+'/'+this.state.selectedDirection+'/'+this.state.selectedStop
       fetchApi(query).then(departureList => this.setState({departureList: departureList}))
@@ -68,7 +68,7 @@ class App extends Component {
     } 
   }
 
-  // Makes the call to get the list depature data and set/change some default state values
+  // Makes the call to get the list departure data and set/change some default state values
   handleStopChange = (event) => {
     let value = event.target.value
     this.setState({
@@ -113,8 +113,8 @@ class App extends Component {
           </select>
         }
         </div>
-        {/* Depature list along with the stop description and stop id */}
-        { state.showDepartureList && <DepatureList departureList = {departureList} /> }
+        {/* Departure list along with the stop description and stop id */}
+        { state.showDepartureList && <DepartureList departureList = {departureList} /> }
       </div>
     );
   }

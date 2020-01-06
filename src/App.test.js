@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, cleanup, fireEvent } from '@testing-library/react';
 import App from './App';
-import DepatureList from './depatureList'
+import DepartureList from './departureList'
 import fetchApi from './apiCalls'
 
 
@@ -87,39 +87,39 @@ const departureList = {
   }
 
   test(`has rendered a the items passed correctly`, () => {
-    const { getByRole } = render(<DepatureList departureList = {departureList} />)
+    const { getByRole } = render(<DepartureList departureList = {departureList} />)
     let listItems = getByRole('list')
     expect(listItems.children.length).toEqual(3)
   })
 
   test('show more/less button when the list length is more than 3', () => {
-    const { getByText } = render(<DepatureList departureList = {departureList} />);
-    const showMore = getByText(/Show more depature time/i);
+    const { getByText } = render(<DepartureList departureList = {departureList} />);
+    const showMore = getByText(/Show more departure time/i);
     expect(showMore).toBeInTheDocument();
   });
 
   test('Check the stop description', () => {
-    const { getByText } = render(<DepatureList departureList = {departureList} />);
+    const { getByText } = render(<DepartureList departureList = {departureList} />);
     const stopDescription = getByText(/7th - Park Station/i);
     expect(stopDescription).toBeInTheDocument();
   });
 
   test('Check the stop number', () => {
-    const { getByText } = render(<DepatureList departureList = {departureList} />);
+    const { getByText } = render(<DepartureList departureList = {departureList} />);
     const stopNumber = getByText(/Stop 17897/i);
     expect(stopNumber).toBeInTheDocument();
   });
 
   test('Check the button text change when clickeds on show more depture time', () => {
-    const { getByText } = render(<DepatureList departureList = {departureList} />);
-    fireEvent.click(getByText(/Show more depature time/i));
-    const showLess = getByText(/Show less depature time/i);
+    const { getByText } = render(<DepartureList departureList = {departureList} />);
+    fireEvent.click(getByText(/Show more departure time/i));
+    const showLess = getByText(/Show less departure time/i);
     expect(showLess).toBeInTheDocument();
   });
 
-  test('Check increase depature list length after clicking on show more depature time', () => {
-    const { getByText, getByRole } = render(<DepatureList departureList = {departureList} />);
-    fireEvent.click(getByText(/Show more depature time/i));
+  test('Check increase departure list length after clicking on show more departure time', () => {
+    const { getByText, getByRole } = render(<DepartureList departureList = {departureList} />);
+    fireEvent.click(getByText(/Show more departure time/i));
     let listItems = getByRole('list')
     expect(listItems.children.length).toEqual(4)
   });
