@@ -98,7 +98,7 @@ class App extends Component {
             <option>Select route</option>
             { routeData.map(route => <option key={route.RouteId} value={route.RouteId}>{route.Description}</option>)}
           </select> :
-          <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div> }
+          (routeData.errors && <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div>) }
         {/* Select the direction select box */}
         { (state.showDirection && directionData) &&
           <select className="select-box" onChange={(e) => this.handleDirectionChange(e)}>
