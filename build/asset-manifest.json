@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.c9ac9424.chunk.css",
+    "main.js": "/static/js/main.59face33.chunk.js",
+    "main.js.map": "/static/js/main.59face33.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.41cbc880.js",
+    "runtime-main.js.map": "/static/js/runtime-main.41cbc880.js.map",
+    "static/js/2.052f946e.chunk.js": "/static/js/2.052f946e.chunk.js",
+    "static/js/2.052f946e.chunk.js.map": "/static/js/2.052f946e.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.a09569e225bff48b2cc5a70967134227.js": "/precache-manifest.a09569e225bff48b2cc5a70967134227.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.c9ac9424.chunk.css.map": "/static/css/main.c9ac9424.chunk.css.map",
+    "static/js/2.052f946e.chunk.js.LICENSE": "/static/js/2.052f946e.chunk.js.LICENSE",
+    "static/media/App.css": "/static/media/nextrip.f307bc69.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.41cbc880.js",
+    "static/js/2.052f946e.chunk.js",
+    "static/css/main.c9ac9424.chunk.css",
+    "static/js/main.59face33.chunk.js"
+  ]
+}
