@@ -5,6 +5,8 @@ Metro Transit app uses live data from [Metro Transit](https://www.metrotransit.o
 ## Prerequisites
 
  You need to have Node.js and npm or yarn installed
+ [Node Download](https://nodejs.org/en/download/)
+ Run `node-v` to check whether Node is install and has version on it
 
 ## Installation
 

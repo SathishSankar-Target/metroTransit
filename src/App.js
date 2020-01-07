@@ -83,7 +83,7 @@ class App extends Component {
 
   render() {
     const state = this.state
-    const routeData = state.routes
+    const routeData = state.routes 
     const directionData = state.direction
     const stopData = state.stop
     const departureList = state.departureList
@@ -93,11 +93,12 @@ class App extends Component {
         <h2 className="page-title">Real-time Departures</h2>
         <div className="select-box-container">
         {/* Select the route select box */}
-        { routeData && 
+        { routeData.length ? 
           <select className="select-box" onChange={(e) => this.handleRoutChange(e)}>
             <option>Select route</option>
             { routeData.map(route => <option key={route.RouteId} value={route.RouteId}>{route.Description}</option>)}
-          </select> }
+          </select> :
+          <div>We are unable to get the desired route option for you to select, Kindly try again after some time</div> }
         {/* Select the direction select box */}
         { (state.showDirection && directionData) &&
           <select className="select-box" onChange={(e) => this.handleDirectionChange(e)}>
