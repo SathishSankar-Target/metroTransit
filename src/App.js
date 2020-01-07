@@ -1,4 +1,7 @@
 import React , { Component }from 'react';
+import { connect } from 'react-redux';
+import { onLoadRouteAction, directionAction } from './action/simpleAction';
+import {getMetro, getRouteData} from './duck/metroDuck'
 import './App.css';
 import {fetchApi} from './apiCalls'
 import DepartureList from './departureList'
@@ -24,7 +27,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetchApi('routes').then(routes => this.setState({routes :routes }))
+
+    fetchApi('routes').then(routes => {
+      this.props.onLoadRouteData(routes)
+      this.setState({routes :routes })
+    } )
     setInterval(this.updateDepartureData, 60000)
   }
   // Makes the call every 1 min only when there is selectedRoute, selectedDirection, selectedStop
@@ -48,7 +55,10 @@ class App extends Component {
     })
     if (value !== 'Select route') {
       fetchApi('directions/'+value)
-      .then(direction => this.setState({direction :direction, showDirection: true, selectedRoute: value }))
+      .then(direction => {
+        this.props.directionData({direction :direction, showDirection: true, selectedRoute: value })
+        this.setState({direction :direction, showDirection: true, selectedRoute: value })
+      })
     } 
   }
 
@@ -120,4 +130,16 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  console.log(getMetro(state))
+  return {
+  ...state
+ }
+}
+
+ const mapDispatchToProps = dispatch => ({
+  onLoadRouteData: (routes) => dispatch(onLoadRouteAction(routes)),
+  directionData: (directionData) => dispatch(directionAction(directionData))
+ })
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
