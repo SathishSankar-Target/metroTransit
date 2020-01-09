@@ -113,7 +113,6 @@ class App extends Component {
 
 export const mapStateToProps = state => {
   const metroData = getMetro(state)
-  console.log(metroData)
   return {
     routeData: metroData.routeData,
     directionData: metroData.directionData,
