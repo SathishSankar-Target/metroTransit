@@ -1,13 +1,27 @@
 export const onLoadRouteAction = (routes) => dispatch => {
     dispatch({
-        type: 'ROUTE_ACTION',
+        type: 'ONLOAD_ROUTE_ACTION',
         payload: routes,
     })
 }
 
-export const directionAction = (directionDate) => dispatch => {
+export const routeChangeAction = (directionDate) => dispatch => {
     dispatch({
-        type: 'DIRECTION_ACTION',
+        type: 'ROUTE_CHANGE_ACTION',
         payload: directionDate,
+    })
+}
+
+export const directionChangeAction = (stopDate) => dispatch => {
+    dispatch({
+        type: 'DIRECTION_CHANGE_ACTION',
+        payload: stopDate,
+    })
+}
+
+export const stopChangeAction = (departureDate) => dispatch => {
+    dispatch({
+        type: 'STOP_CHANGE_ACTION',
+        payload: departureDate,
     })
 }

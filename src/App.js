@@ -1,6 +1,6 @@
 import React , { Component }from 'react';
 import { connect } from 'react-redux';
-import { onLoadRouteAction, directionAction } from './action/simpleAction';
+import { onLoadRouteAction, routeChangeAction, directionChangeAction, stopChangeAction } from './action/simpleAction';
 import {getMetro, getRouteData} from './duck/metroDuck'
 import './App.css';
 import {fetchApi} from './apiCalls'
@@ -27,7 +27,6 @@ class App extends Component {
   }
 
   componentDidMount() {
-
     fetchApi('routes').then(routes => {
       this.props.onLoadRouteData(routes)
       this.setState({routes :routes })
@@ -53,6 +52,15 @@ class App extends Component {
       departureList: [],
       showDepartureList: false,
     })
+    this.props.directionData({
+      showDirection: false,
+      direction: [],
+      selectedRoute:'',
+      stop:[],
+      showStop: false,
+      departureList: [],
+      showDepartureList: false,
+    })
     if (value !== 'Select route') {
       fetchApi('directions/'+value)
       .then(direction => {
@@ -72,9 +80,19 @@ class App extends Component {
       departureList: [],
       showDepartureList: false,
     })
+    this.props.stopData({
+      showStop: false,
+      stop: [],
+      selectedDirection: '',
+      departureList: [],
+      showDepartureList: false,
+    })
     if (value !== 'Select direction') {
       fetchApi('stops/'+this.state.selectedRoute+'/'+value)
-      .then(direction => this.setState({stop :direction, showStop: true, selectedDirection: value }))
+      .then(stop => {
+        this.props.stopData({stop :stop, showStop: true, selectedDirection: value })
+        this.setState({stop :stop, showStop: true, selectedDirection: value })
+      })
     } 
   }
 
@@ -85,9 +103,13 @@ class App extends Component {
       showDepartureList: false,
       departureList: []
     })
+    this.props.departureData({departureList: [], showDepartureList: false})
     if (value !== 'Select stop') {
       fetchApi(this.state.selectedRoute+'/'+this.state.selectedDirection+'/'+value)
-      .then(departureList => this.setState({departureList: departureList, showDepartureList: true, selectedStop: value}))
+      .then(departureList => {
+        this.props.departureData({departureList: departureList, showDepartureList: true, selectedStop: value})
+        this.setState({departureList: departureList, showDepartureList: true, selectedStop: value})
+      })
     } 
   }
 
@@ -139,7 +161,9 @@ const mapStateToProps = state => {
 
  const mapDispatchToProps = dispatch => ({
   onLoadRouteData: (routes) => dispatch(onLoadRouteAction(routes)),
-  directionData: (directionData) => dispatch(directionAction(directionData))
+  directionData: (directionData) => dispatch(routeChangeAction(directionData)),
+  stopData: (stopData) => dispatch(directionChangeAction(stopData)),
+  departureData: (departureData) => dispatch(stopChangeAction(departureData))
  })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
