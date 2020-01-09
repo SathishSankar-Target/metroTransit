@@ -10,7 +10,10 @@ const initialState = {
     showStop: false,
     departureData: [],
     showDepartureList: false,
-    showRouteSelection: true
+    showRouteSelection: true,
+    departureCountToShow: 3,
+    departureExpanded: false
+
 }
 
 export default (state = initialState, action) => {
@@ -46,6 +49,12 @@ export default (state = initialState, action) => {
             departureData: action.payload.departureList,
             showDepartureList: action.payload.showDepartureList,
             selectedStop: action.payload.selectedStop
+         }
+         case 'SHOW_MORE_CLICK_ACTION':
+         return {
+            ...state,
+            departureCountToShow: action.payload.departureCountToShow,
+            departureExpanded: action.payload.departureExpanded,
          }
         default:
          return state

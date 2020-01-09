@@ -25,3 +25,9 @@ export const stopChangeAction = (departureDate) => dispatch => {
         payload: departureDate,
     })
 }
+export const showMoreClickAction = (showMoreClickData) => dispatch => {
+    dispatch({
+        type: 'SHOW_MORE_CLICK_ACTION',
+        payload: showMoreClickData,
+    })
+}

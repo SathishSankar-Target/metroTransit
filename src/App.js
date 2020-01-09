@@ -1,7 +1,7 @@
 import React , { Component }from 'react';
 import { connect } from 'react-redux';
 import { onLoadRouteAction, routeChangeAction, directionChangeAction, stopChangeAction } from './action/simpleAction';
-import {getMetro, getRouteData} from './duck/metroDuck'
+import {getMetro} from './duck/metroDuck'
 import './App.css';
 import {fetchApi} from './apiCalls'
 import DepartureList from './departureList'
@@ -10,20 +10,6 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.updateDepartureData = this.updateDepartureData.bind(this)
-    this.state = {
-      routes : [],
-      selectedRoute: '',
-      direction: [],
-      selectedDirection: '',
-      stop: [],
-      selectedStop: '',
-      showDirection: false,
-      showStop: false,
-      departureList: [],
-      showDepartureList: false,
-      showRouteSelection: true,
-      showStopSelection: false
-    }
   }
 
   componentDidMount() {
@@ -35,8 +21,8 @@ class App extends Component {
   }
   // Makes the call every 1 min only when there is selectedRoute, selectedDirection, selectedStop
   async updateDepartureData() {
-    if(this.state.selectedRoute !== '' && this.state.selectedDirection !== '' && this.state.selectedStop !== '') {
-      const query = this.state.selectedRoute+'/'+this.state.selectedDirection+'/'+this.state.selectedStop
+    if(this.props.selectedRoute !== '' && this.props.selectedDirection !== '' && this.props.selectedStop !== '') {
+      const query = this.props.selectedRoute+'/'+this.props.selectedDirection+'/'+this.props.selectedStop
       fetchApi(query).then(departureList => this.setState({departureList: departureList}))
     }
   }
@@ -44,15 +30,7 @@ class App extends Component {
   // Makes the call to get the direction select box data and set/change some default state values
   handleRoutChange = (event) => {
     let value = event.target.value
-    this.setState({
-      showDirection: false,
-      direction: [],
-      selectedRoute:'',
-      showStop: false,
-      departureList: [],
-      showDepartureList: false,
-    })
-    this.props.directionData({
+    this.props.routeChangeAction({
       showDirection: false,
       direction: [],
       selectedRoute:'',
@@ -64,8 +42,7 @@ class App extends Component {
     if (value !== 'Select route') {
       fetchApi('directions/'+value)
       .then(direction => {
-        this.props.directionData({direction :direction, showDirection: true, selectedRoute: value })
-        this.setState({direction :direction, showDirection: true, selectedRoute: value })
+        this.props.routeChangeAction({direction :direction, showDirection: true, selectedRoute: value })
       })
     } 
   }
@@ -73,14 +50,7 @@ class App extends Component {
   // Makes the call to get the stop select box data and set/change some default state values
   handleDirectionChange = (event) => {
     let value = event.target.value
-    this.setState({
-      showStop: false,
-      stop: [],
-      selectedDirection: '',
-      departureList: [],
-      showDepartureList: false,
-    })
-    this.props.stopData({
+    this.props.directionChangeAction({
       showStop: false,
       stop: [],
       selectedDirection: '',
@@ -88,10 +58,9 @@ class App extends Component {
       showDepartureList: false,
     })
     if (value !== 'Select direction') {
-      fetchApi('stops/'+this.state.selectedRoute+'/'+value)
+      fetchApi('stops/'+this.props.selectedRoute+'/'+value)
       .then(stop => {
-        this.props.stopData({stop :stop, showStop: true, selectedDirection: value })
-        this.setState({stop :stop, showStop: true, selectedDirection: value })
+        this.props.directionChangeAction({stop :stop, showStop: true, selectedDirection: value })
       })
     } 
   }
@@ -99,27 +68,17 @@ class App extends Component {
   // Makes the call to get the list departure data and set/change some default state values
   handleStopChange = (event) => {
     let value = event.target.value
-    this.setState({
-      showDepartureList: false,
-      departureList: []
-    })
-    this.props.departureData({departureList: [], showDepartureList: false})
+    this.props.stopChangeAction({departureList: [], showDepartureList: false})
     if (value !== 'Select stop') {
-      fetchApi(this.state.selectedRoute+'/'+this.state.selectedDirection+'/'+value)
+      fetchApi(this.props.selectedRoute+'/'+this.props.selectedDirection+'/'+value)
       .then(departureList => {
-        this.props.departureData({departureList: departureList, showDepartureList: true, selectedStop: value})
-        this.setState({departureList: departureList, showDepartureList: true, selectedStop: value})
+        this.props.stopChangeAction({departureList: departureList, showDepartureList: true, selectedStop: value})
       })
     } 
   }
 
   render() {
-    const state = this.state
-    const routeData = state.routes
-    const directionData = state.direction
-    const stopData = state.stop
-    const departureList = state.departureList
-    // const { routeData, directionData, stopData, departureList } = state
+    const { routeData, directionData, stopData, showDepartureList, departureList, showStop, showDirection } = this.props
     return (
       <div className="App">
         <h2 className="page-title">Real-time Departures</h2>
@@ -131,14 +90,14 @@ class App extends Component {
             { routeData.map(route => <option key={route.RouteId} value={route.RouteId}>{route.Description}</option>)}
           </select> }
         {/* Select the direction select box */}
-        { (state.showDirection && directionData) &&
+        { (showDirection && directionData) &&
           <select className="select-box" onChange={(e) => this.handleDirectionChange(e)}>
             <option>Select direction</option>
             { directionData.map(direction => <option key={direction.DirectionId} value={direction.DirectionId}>{direction.DirectionName}</option>)}
           </select>
         }
         {/* Select the stop select box */}
-        { (state.showStop && stopData) &&
+        { (showStop && stopData) &&
           <select className="select-box" onChange={(e) => this.handleStopChange(e)}>
             <option>Select stop</option>
             { stopData.map(stop => <option key={stop.PlaceCode} value={stop.PlaceCode}>{stop.Description}</option>)}
@@ -146,24 +105,35 @@ class App extends Component {
         }
         </div>
         {/* Departure list along with the stop description and stop id */}
-        { state.showDepartureList && <DepartureList departureList = {departureList} /> }
+        { showDepartureList && <DepartureList /> }
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  console.log(getMetro(state))
+export const mapStateToProps = state => {
+  const metroData = getMetro(state)
+  console.log(metroData)
   return {
-  ...state
+    routeData: metroData.routeData,
+    directionData: metroData.directionData,
+    stopData: metroData.stopData,
+    showDepartureList: metroData.showDepartureList,
+    departureList:metroData.departureData,
+    showStop: metroData.showStop,
+    showDirection: metroData.showDirection,
+    selectedRoute: metroData.selectedRoute,
+    selectedDirection: metroData.selectedDirection,
+    selectedStop: metroData.selectedStop,
+    showRouteSelection: metroData.showRouteSelection
  }
 }
 
- const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onLoadRouteData: (routes) => dispatch(onLoadRouteAction(routes)),
-  directionData: (directionData) => dispatch(routeChangeAction(directionData)),
-  stopData: (stopData) => dispatch(directionChangeAction(stopData)),
-  departureData: (departureData) => dispatch(stopChangeAction(departureData))
+  routeChangeAction: (directionData) => dispatch(routeChangeAction(directionData)),
+  directionChangeAction: (stopData) => dispatch(directionChangeAction(stopData)),
+  stopChangeAction: (departureData) => dispatch(stopChangeAction(departureData))
  })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

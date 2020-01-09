@@ -1,31 +1,26 @@
 import React , { Component }from 'react';
+import { connect } from 'react-redux';
 import './App.css';
-
+import {getMetro} from './duck/metroDuck'
+import { showMoreClickAction } from './action/simpleAction';
 
 class DepartureList extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      departureCountToShow: 3,
-      departureExpanded: false,
-    }
-  }
   
   // onClick method to expand/colapse to show more/less departure list when the list length is more than 3
   showMoreDeparture = () => {
-    if(this.state.departureCountToShow === 3 ){
-      this.setState({ departureCountToShow: this.props.departureList.Departures.length, departureExpanded: true })
+    if(this.props.departureCountToShow === 3 ){
+	  this.props.showMoreClick({ departureCountToShow: this.props.departureList.Departures.length, departureExpanded: true })
     } else {
-      this.setState({ departureCountToShow: 3, departureExpanded: false })
+	  this.props.showMoreClick({ departureCountToShow: 3, departureExpanded: false })
     }
   }
 
   timeDiff = (departTime) => {
-	  return ((new Date(departTime) -new Date()) < 5*60*1000)
+	  return ((new Date(departTime) - new Date()) < 5*60*1000)
   }
 
   render() {
-		const departureList = this.props.departureList
+	const { departureList, departureExpanded, departureCountToShow } = this.props
     return (
 			<div className="departure-container">
 				{ (departureList.Stop !== undefined && departureList.Departures !== undefined) ?
@@ -38,7 +33,7 @@ class DepartureList extends Component {
 							</div>
 						</div>
 						<div role='list'>
-							{departureList.Departures.slice(0, this.state.departureCountToShow).map(departure => {
+							{departureList.Departures.slice(0, departureCountToShow).map(departure => {
 							return <div className="departure-list" key={departure.BlockNumber}>
 									<div className="route-discription">
 									<span className="route-id"><strong>{departure.RouteId}</strong></span>
@@ -54,8 +49,8 @@ class DepartureList extends Component {
 						{/* show more/less departure list button */}
 						{ departureList.Departures.length > 3 && 
 							<button className="show-more-button" onClick={this.showMoreDeparture}>
-							<span className={this.state.departureExpanded ? 'expand': 'colapsed'}></span>
-							Show {this.state.departureExpanded ? 'less' : 'more' } departure time
+							<span className={departureExpanded ? 'expand': 'colapsed'}></span>
+							Show {departureExpanded ? 'less' : 'more' } departure time
 							</button>
 						}
 					</div>
@@ -69,4 +64,17 @@ class DepartureList extends Component {
 }
         
 
-export default DepartureList
+export const mapStateToProps = state => {
+	const metroData = getMetro(state)
+	return {
+	  departureList:metroData.departureData,
+	  departureExpanded: metroData.departureExpanded,
+	  departureCountToShow: metroData.departureCountToShow
+   	}
+}
+  
+export const mapDispatchToProps = dispatch => ({
+	showMoreClick: (showMoreClickData) => dispatch(showMoreClickAction(showMoreClickData)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DepartureList);
