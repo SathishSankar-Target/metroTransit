@@ -16,7 +16,7 @@ class DepartureList extends Component {
   }
 
   timeDiff = (departTime) => {
-	  return ((new Date(departTime) - new Date()) < 5*60*1000)
+	return ((new Date(departTime) - new Date()) < 5*60*1000)
   }
 
   render() {
